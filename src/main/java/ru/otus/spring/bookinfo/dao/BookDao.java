@@ -6,7 +6,7 @@ import ru.otus.spring.bookinfo.domain.Genre;
 
 import java.util.List;
 
-public interface BookDao extends GenericDao<Book> {
+public interface BookDao extends GenericDao<Book, Integer> {
 
     List<Book> getByGenre(Genre genre);
 

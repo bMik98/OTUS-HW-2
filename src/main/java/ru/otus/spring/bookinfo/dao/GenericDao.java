@@ -2,7 +2,7 @@ package ru.otus.spring.bookinfo.dao;
 
 import java.util.List;
 
-public interface GenericDao<E> {
+public interface GenericDao<E, K> {
 
     int count();
 
@@ -10,7 +10,7 @@ public interface GenericDao<E> {
 
     void delete(E entity);
 
-    E getById(int id);
+    E getById(K id);
 
     List<E> getAll();
 }

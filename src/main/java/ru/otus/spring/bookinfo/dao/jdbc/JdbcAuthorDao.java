@@ -30,8 +30,8 @@ public class JdbcAuthorDao implements AuthorDao {
     }
 
     @Override
-    public void delete(Author entity) {
-
+    public void delete(Author author) {
+        jdbc.update("delete from authors where id = ?", author.getId());
     }
 
     @Override
