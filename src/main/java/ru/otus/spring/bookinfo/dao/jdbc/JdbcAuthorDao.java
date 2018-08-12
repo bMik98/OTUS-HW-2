@@ -30,6 +30,11 @@ public class JdbcAuthorDao implements AuthorDao {
     }
 
     @Override
+    public void delete(Author entity) {
+
+    }
+
+    @Override
     public Author getById(int id) {
         return jdbc.queryForObject("select * from authors where id = ?", new Object[]{id}, new AuthorMapper());
     }
