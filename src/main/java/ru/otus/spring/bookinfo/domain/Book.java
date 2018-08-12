@@ -13,7 +13,7 @@ public class Book {
 
     private final long id;
 
-    private final String title;
+    private final String name;
 
     Set<Genre> genres;
 
