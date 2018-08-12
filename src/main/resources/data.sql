@@ -8,12 +8,12 @@ insert into GENRES (id, name) values (3, 'Love Story');
 insert into GENRES (id, name) values (4, 'Roman');
 insert into GENRES (id, name) values (5, 'Detective');
 
-insert into BOOKS (id, title) values (1, 'Interesting Book');
-insert into BOOKS (id, title) values (2, 'Not Interesting Book');
-insert into BOOKS (id, title) values (3, 'Just Modern Story');
-insert into BOOKS (id, title) values (4, 'Yet Another Narrative');
-insert into BOOKS (id, title) values (5, 'Study him to fly');
-insert into BOOKS (id, title) values (6, 'Hidden story');
+insert into BOOKS (id, name) values (1, 'Interesting Book');
+insert into BOOKS (id, name) values (2, 'Not Interesting Book');
+insert into BOOKS (id, name) values (3, 'Just Modern Story');
+insert into BOOKS (id, name) values (4, 'Yet Another Narrative');
+insert into BOOKS (id, name) values (5, 'Study him to fly');
+insert into BOOKS (id, name) values (6, 'Hidden story');
 
 insert into BOOK_GENRES(genre_id, book_id) values (1, 1);
 insert into BOOK_GENRES(genre_id, book_id) values (2, 2);
