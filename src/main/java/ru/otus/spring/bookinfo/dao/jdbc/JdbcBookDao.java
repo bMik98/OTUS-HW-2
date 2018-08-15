@@ -3,27 +3,27 @@ package ru.otus.spring.bookinfo.dao.jdbc;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import ru.otus.spring.bookinfo.dao.AuthorDao;
-import ru.otus.spring.bookinfo.domain.Author;
+import ru.otus.spring.bookinfo.dao.BookDao;
+import ru.otus.spring.bookinfo.domain.Book;
 
 @Repository
-public class JdbcAuthorDao extends AbstractJdbcEntityDao<Author> implements AuthorDao {
+public class JdbcBookDao extends AbstractJdbcEntityDao<Book> implements BookDao {
 
-    public JdbcAuthorDao(JdbcOperations jdbcOperations) {
+    public JdbcBookDao(JdbcOperations jdbcOperations) {
         super(jdbcOperations);
     }
 
     @Override
     public String getEntityTableName() {
-        return "authors";
+        return "books";
     }
 
     @Override
-    public RowMapper<Author> createEntityMapper() {
+    public RowMapper<Book> createEntityMapper() {
         return (rs, rowNum) -> {
             int id = rs.getInt("id");
             String name = rs.getString("name");
-            return new Author(id, name);
+            return new Book(id, name);
         };
     }
 }

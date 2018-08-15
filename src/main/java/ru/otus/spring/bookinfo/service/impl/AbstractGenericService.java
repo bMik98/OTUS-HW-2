@@ -1,15 +1,16 @@
 package ru.otus.spring.bookinfo.service.impl;
 
-import ru.otus.spring.bookinfo.dao.GenericDao;
+import ru.otus.spring.bookinfo.dao.EntityDao;
+import ru.otus.spring.bookinfo.domain.AbstractEntity;
 import ru.otus.spring.bookinfo.service.GenericService;
 
 import java.util.List;
 
-public abstract class AbstractGenericService<E> implements GenericService<E, Integer> {
+public abstract class AbstractGenericService<E extends AbstractEntity> implements GenericService<E> {
 
-    private final GenericDao<E, Integer> dao;
+    private final EntityDao<E> dao;
 
-    public AbstractGenericService(GenericDao<E, Integer> dao) {
+    public AbstractGenericService(EntityDao<E> dao) {
         this.dao = dao;
     }
 
@@ -24,7 +25,7 @@ public abstract class AbstractGenericService<E> implements GenericService<E, Int
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(int id) {
         E entity = getById(id);
         if (entity != null) {
             dao.delete(entity);
@@ -32,7 +33,7 @@ public abstract class AbstractGenericService<E> implements GenericService<E, Int
     }
 
     @Override
-    public E getById(Integer id) {
+    public E getById(int id) {
         return dao.getById(id);
     }
 

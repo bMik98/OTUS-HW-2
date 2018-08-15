@@ -1,15 +1,8 @@
 package ru.otus.spring.bookinfo.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+public class Genre extends AbstractEntity {
 
-@Getter
-@Setter
-@AllArgsConstructor
-public class Genre {
-
-    private final int id;
-
-    private final String name;
+    public Genre(int id, String name) {
+        super(id, name);
+    }
 }

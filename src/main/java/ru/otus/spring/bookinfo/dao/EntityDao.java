@@ -1,8 +1,10 @@
 package ru.otus.spring.bookinfo.dao;
 
+import ru.otus.spring.bookinfo.domain.AbstractEntity;
+
 import java.util.List;
 
-public interface GenericDao<E, K> {
+public interface EntityDao<E extends AbstractEntity> {
 
     int count();
 
@@ -10,7 +12,7 @@ public interface GenericDao<E, K> {
 
     void delete(E entity);
 
-    E getById(K id);
+    E getById(int id);
 
     List<E> getAll();
 }
