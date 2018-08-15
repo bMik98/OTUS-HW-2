@@ -11,7 +11,7 @@ public abstract class AbstractJdbcEntityDao<E extends AbstractEntity> implements
 
     protected final JdbcOperations jdbc;
 
-    public AbstractJdbcEntityDao(JdbcOperations jdbcOperations) {
+    AbstractJdbcEntityDao(JdbcOperations jdbcOperations) {
         jdbc = jdbcOperations;
     }
 
@@ -32,7 +32,8 @@ public abstract class AbstractJdbcEntityDao<E extends AbstractEntity> implements
 
     @Override
     public E getById(int id) {
-        return jdbc.queryForObject("select * from books where id = ?", new Object[]{id}, createEntityMapper());
+        return jdbc.queryForObject("select * from " + getEntityTableName() + " where id = ?",
+                new Object[]{id}, createEntityMapper());
     }
 
     @Override
@@ -40,7 +41,7 @@ public abstract class AbstractJdbcEntityDao<E extends AbstractEntity> implements
         return jdbc.query("select * from " + getEntityTableName(), createEntityMapper());
     }
 
-    public abstract String getEntityTableName();
+    protected abstract String getEntityTableName();
 
-    public abstract RowMapper<E> createEntityMapper();
+    protected abstract RowMapper<E> createEntityMapper();
 }
