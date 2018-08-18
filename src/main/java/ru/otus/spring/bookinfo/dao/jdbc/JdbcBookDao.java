@@ -29,25 +29,25 @@ public class JdbcBookDao extends AbstractJdbcEntityDao<Book> implements BookDao 
     }
 
     @Override
-    public void unbound(Book book, Author author) {
+    public void unbind(Book book, Author author) {
         String sql = "delete from " + BOOK_AUTHORS + " where " + FK + " = ? and " + AUTHOR_FK + " = ?";
         jdbc.update(sql, book.getId(), author.getId());
     }
 
     @Override
-    public void unbound(Book book, Genre genre) {
+    public void unbind(Book book, Genre genre) {
         String sql = "delete from " + BOOK_GENRES + " where " + FK + " = ? and " + GENRE_FK + " = ?";
         jdbc.update(sql, book.getId(), genre.getId());
     }
 
     @Override
-    public void bound(Book book, Author author) {
+    public void bind(Book book, Author author) {
         String sql = "insert into " + BOOK_AUTHORS + " (" + FK + "," + AUTHOR_FK + ") values (?, ?)";
         jdbc.update(sql, book.getId(), author.getId());
     }
 
     @Override
-    public void bound(Book book, Genre genre) {
+    public void bind(Book book, Genre genre) {
         String sql = "insert into " + BOOK_GENRES + " (" + FK + "," + GENRE_FK + ") values (?, ?)";
         jdbc.update(sql, book.getId(), genre.getId());
     }

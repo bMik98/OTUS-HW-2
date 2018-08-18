@@ -6,11 +6,11 @@ import ru.otus.spring.bookinfo.domain.Genre;
 
 public interface BookDao extends EntityDao<Book> {
 
-    void unbound(Book book, Author author);
+    void unbind(Book book, Author author);
 
-    void unbound(Book book, Genre genre);
+    void unbind(Book book, Genre genre);
 
-    void bound(Book book, Author author);
+    void bind(Book book, Author author);
 
-    void bound(Book book, Genre genre);
+    void bind(Book book, Genre genre);
 }

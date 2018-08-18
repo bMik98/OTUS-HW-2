@@ -13,7 +13,7 @@ insert into BOOKS (id, name) values (2, 'Not Interesting Book');
 insert into BOOKS (id, name) values (3, 'Just Modern Story');
 insert into BOOKS (id, name) values (4, 'Yet Another Narrative');
 insert into BOOKS (id, name) values (5, 'Study him to fly');
-insert into BOOKS (id, name) values (6, 'Hidden story');
+insert into BOOKS (id, name) values (6, 'Hidden and Unknown');
 
 insert into BOOK_GENRES(genre_id, book_id) values (1, 1);
 insert into BOOK_GENRES(genre_id, book_id) values (2, 2);

@@ -8,6 +8,10 @@ import lombok.Getter;
 public abstract class AbstractEntity {
 
     private final int id;
-
     private final String name;
+
+    @Override
+    public String toString() {
+        return "" + id;
+    }
 }
