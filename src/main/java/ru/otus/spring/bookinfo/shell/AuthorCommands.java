@@ -24,17 +24,17 @@ public class AuthorCommands extends AbstractCommands<Author> {
         showCount();
     }
 
-    @ShellMethod("Insert new Author")
+    @ShellMethod("Insert new author")
     public void insertAuthor(@ShellOption @NotEmpty String name) {
         insertEntity(name);
     }
 
-    @ShellMethod("Delete Author by ID")
+    @ShellMethod("Delete an author by ID")
     public void deleteAuthor(@ShellOption @Positive int id) {
         deleteEntity(id);
     }
 
-    @ShellMethod("Find Author by ID")
+    @ShellMethod("Find an author by ID")
     public void getAuthor(@ShellOption @Positive int id) {
         getEntity(id);
     }

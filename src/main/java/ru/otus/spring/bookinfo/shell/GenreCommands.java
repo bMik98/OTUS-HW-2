@@ -24,17 +24,17 @@ public class GenreCommands extends AbstractCommands<Genre> {
         showCount();
     }
 
-    @ShellMethod("Insert new Genre")
+    @ShellMethod("Insert new genre")
     public void insertGenre(@ShellOption @NotEmpty String name) {
         insertEntity(name);
     }
 
-    @ShellMethod("Delete Genre by ID")
+    @ShellMethod("Delete a genre by ID")
     public void deleteGenre(@ShellOption @Positive int id) {
         deleteEntity(id);
     }
 
-    @ShellMethod("Find Genre by ID")
+    @ShellMethod("Find a genre by ID")
     public void getGenre(@ShellOption @Positive int id) {
         getEntity(id);
     }
