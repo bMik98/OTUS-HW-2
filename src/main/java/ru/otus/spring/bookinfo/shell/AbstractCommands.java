@@ -3,8 +3,6 @@ package ru.otus.spring.bookinfo.shell;
 import ru.otus.spring.bookinfo.dao.EntityDao;
 import ru.otus.spring.bookinfo.domain.AbstractEntity;
 
-import java.util.List;
-
 public abstract class AbstractCommands<E extends AbstractEntity> {
     protected final EntityDao<E> dao;
 
@@ -23,28 +21,19 @@ public abstract class AbstractCommands<E extends AbstractEntity> {
 
     void deleteEntity(int id) {
         E entity = dao.getById(id);
-        if (entity != null) {
-            dao.delete(entity);
-        }
+        dao.delete(entity);
         listEntities();
     }
 
     void getEntity(int id) {
         showTitle();
         E entity = dao.getById(id);
-        if (entity != null) {
-            showEntity(dao.getById(id));
-        } else {
-            System.out.println("Entity was not found");
-        }
+        showEntity(entity);
     }
 
     void listEntities() {
         showTitle();
-        List<E> list = dao.getAll();
-        if (list.size() > 0) {
-            dao.getAll().forEach(this::showEntity);
-        }
+        dao.getAll().forEach(this::showEntity);
     }
 
     void showTitle() {
