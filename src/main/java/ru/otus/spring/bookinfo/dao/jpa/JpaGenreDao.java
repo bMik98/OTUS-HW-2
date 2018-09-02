@@ -1,9 +1,9 @@
 package ru.otus.spring.bookinfo.dao.jpa;
 
 import org.springframework.stereotype.Repository;
-import ru.otus.spring.bookinfo.dao.AuthorDao;
-import ru.otus.spring.bookinfo.domain.Author;
+import ru.otus.spring.bookinfo.dao.GenreDao;
 import ru.otus.spring.bookinfo.domain.Book;
+import ru.otus.spring.bookinfo.domain.Genre;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @SuppressWarnings("JpaQlInspection")
 @Repository
-public class JpaGenreDao implements AuthorDao {
+public class JpaGenreDao implements GenreDao {
 
     @PersistenceContext
     private EntityManager em;
@@ -23,45 +23,45 @@ public class JpaGenreDao implements AuthorDao {
     }
 
     @Override
-    public void insert(Author p) {
+    public void insert(Genre p) {
         em.persist(p);
     }
 
     @Override
-    public void delete(Author entity) {
+    public void delete(Genre entity) {
 
     }
 
     @Override
-    public Author getById(int id) {
-        return em.find(Author.class, id);
+    public Genre getById(int id) {
+        return em.find(Genre.class, id);
     }
 
-    public Author getFirst() {
-        TypedQuery<Author> query = em.createQuery(
-                "select e from Author e where e.id = 1",
-                Author.class);
+    public Genre getFirst() {
+        TypedQuery<Genre> query = em.createQuery(
+                "select e from Genre e where e.id = 1",
+                Genre.class);
         return query.getSingleResult();
     }
 
     @Override
-    public List<Author> getAll() {
-        TypedQuery<Author> query = em.createQuery(
-                "select e from Author e",
-                Author.class);
+    public List<Genre> getAll() {
+        TypedQuery<Genre> query = em.createQuery(
+                "select e from Genre e",
+                Genre.class);
         return query.getResultList();
     }
 
-    public Author getByName(String name) {
-        TypedQuery<Author> query = em.createQuery(
-                "select e from Author e where e.name = :name",
-                Author.class);
+    public Genre getByName(String name) {
+        TypedQuery<Genre> query = em.createQuery(
+                "select e from Genre e where e.name = :name",
+                Genre.class);
         query.setParameter("name", name);
         return query.getSingleResult();
     }
 
     @Override
-    public List<Author> getByBook(Book book) {
+    public List<Genre> getByBook(Book book) {
         return null;
     }
 }
