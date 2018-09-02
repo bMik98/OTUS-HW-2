@@ -2,10 +2,12 @@ package ru.otus.spring.bookinfo.domain;
 
 import lombok.Getter;
 
+import javax.persistence.Entity;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 @Getter
 public class Book extends AbstractEntity {
 
