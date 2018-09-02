@@ -1,6 +1,7 @@
 package ru.otus.spring.bookinfo.shell;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -23,7 +24,10 @@ public class BookCommands extends AbstractCommands<Book> {
     private final AuthorDao authorDao;
 
     @Autowired
-    public BookCommands(BookDao bookDao, GenreDao genreDao, AuthorDao authorDao) {
+    public BookCommands(
+            @Qualifier("jpaBookDao") BookDao bookDao,
+            @Qualifier("jpaGenreDao") GenreDao genreDao,
+            @Qualifier("jpaAuthorDao") AuthorDao authorDao) {
         super(bookDao);
         this.bookDao = bookDao;
         this.genreDao = genreDao;
@@ -71,7 +75,7 @@ public class BookCommands extends AbstractCommands<Book> {
         getEntity(bookId);
     }
 
-   @ShellMethod("Unbind a genre from a book")
+    @ShellMethod("Unbind a genre from a book")
     public void unbindGenre(int bookId, int genreId) {
         Book book = bookDao.getById(bookId);
         Genre genre = genreDao.getById(genreId);

@@ -1,6 +1,7 @@
 package ru.otus.spring.bookinfo.shell;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -15,7 +16,7 @@ import javax.validation.constraints.Positive;
 public class GenreCommands extends AbstractCommands<Genre> {
 
     @Autowired
-    public GenreCommands(GenreDao genreDao) {
+    public GenreCommands(@Qualifier("jpaGenreDao") GenreDao genreDao) {
         super(genreDao);
     }
 

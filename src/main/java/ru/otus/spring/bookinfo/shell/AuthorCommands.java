@@ -1,6 +1,7 @@
 package ru.otus.spring.bookinfo.shell;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
@@ -15,7 +16,7 @@ import javax.validation.constraints.Positive;
 public class AuthorCommands extends AbstractCommands<Author> {
 
     @Autowired
-    public AuthorCommands(AuthorDao authorDao) {
+    public AuthorCommands(@Qualifier("jpaAuthorDao") AuthorDao authorDao) {
         super(authorDao);
     }
 
