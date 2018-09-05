@@ -3,11 +3,11 @@ package ru.otus.spring.bookinfo.dao.jdbc;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.RowMapper;
 import ru.otus.spring.bookinfo.dao.EntityDao;
-import ru.otus.spring.bookinfo.domain.AbstractEntity;
+import ru.otus.spring.bookinfo.domain.BasicEntity;
 
 import java.util.List;
 
-public abstract class AbstractJdbcEntityDao<E extends AbstractEntity> implements EntityDao<E> {
+public abstract class AbstractJdbcEntityDao<E extends BasicEntity> implements EntityDao<E> {
 
     protected final JdbcOperations jdbc;
 

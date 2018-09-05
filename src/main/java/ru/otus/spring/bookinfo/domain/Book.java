@@ -1,30 +1,48 @@
 package ru.otus.spring.bookinfo.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Getter
-public class Book extends AbstractEntity {
+@AllArgsConstructor
+public class Book implements BasicEntity {
 
-    private final Set<Genre> genres = new HashSet<>();
-    private final Set<Author> authors = new HashSet<>();
+    @Id
+    @GeneratedValue
+    private final int id;
+
+    private final String name;
+
+    @ManyToMany
+    private Set<Genre> genres = new HashSet<>();
+
+    @ManyToMany
+    private Set<Author> authors = new HashSet<>();
 
     public Book(int id, String name) {
-        super(id, name);
+        this.id = id;
+        this.name = name;
     }
 
     public void setGenres(Collection<Genre> genres) {
-        this.genres.clear();
-        this.genres.addAll(genres);
+        this.genres = new HashSet<>(genres);
     }
 
     public void setAuthors(Collection<Author> authors) {
-        this.authors.clear();
-        this.authors.addAll(authors);
+        this.authors = new HashSet<>(authors);
+    }
+
+    @Override
+    public String toString() {
+        return "" + id;
     }
 }

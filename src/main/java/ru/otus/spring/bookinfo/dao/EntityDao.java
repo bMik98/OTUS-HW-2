@@ -1,10 +1,10 @@
 package ru.otus.spring.bookinfo.dao;
 
-import ru.otus.spring.bookinfo.domain.AbstractEntity;
+import ru.otus.spring.bookinfo.domain.BasicEntity;
 
 import java.util.List;
 
-public interface EntityDao<E extends AbstractEntity> {
+public interface EntityDao<E extends BasicEntity> {
 
     int count();
 
