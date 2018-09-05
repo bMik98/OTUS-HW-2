@@ -1,4 +1,4 @@
-package ru.otus.spring.bookinfo.dao.jdbc;
+package ru.otus.spring.bookinfo.dao;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,10 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.junit4.SpringRunner;
-import ru.otus.spring.bookinfo.config.JdbcTestConfig;
-import ru.otus.spring.bookinfo.dao.AuthorDao;
-import ru.otus.spring.bookinfo.dao.BookDao;
-import ru.otus.spring.bookinfo.dao.GenreDao;
+import ru.otus.spring.bookinfo.config.DaoTestConfig;
 import ru.otus.spring.bookinfo.domain.Author;
 import ru.otus.spring.bookinfo.domain.Book;
 import ru.otus.spring.bookinfo.domain.Genre;
@@ -22,14 +19,14 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @JdbcTest
-@Import(JdbcTestConfig.class)
-public class JdbcBookDaoTest {
+@Import(DaoTestConfig.class)
+public class BookDaoTest {
 
     private static final int EXPECTED_COUNT = 6;
     private static final String EXPECTED_NAME = "TestName";
 
     @Autowired
-    private BookDao dao;
+    private BookDao bookDao;
 
     @Autowired
     private GenreDao genreDao;
@@ -43,69 +40,69 @@ public class JdbcBookDaoTest {
 
     @Test
     public void count() {
-        assertEquals(EXPECTED_COUNT, dao.count());
+        assertEquals(EXPECTED_COUNT, bookDao.count());
     }
 
     @Test
     public void insertGetAndDelete() {
-        int before = dao.count();
-        dao.insert(new Book(0, EXPECTED_NAME));
-        assertEquals(before + 1, dao.count());
+        int before = bookDao.count();
+        bookDao.insert(new Book(0, EXPECTED_NAME));
+        assertEquals(before + 1, bookDao.count());
         int expectedId = before + 1;
-        Book book = dao.getById(expectedId);
+        Book book = bookDao.getById(expectedId);
         assertEquals(EXPECTED_NAME, book.getName());
-        dao.delete(book);
-        assertEquals(before, dao.count());
+        bookDao.delete(book);
+        assertEquals(before, bookDao.count());
     }
 
     @Test
     public void getById() {
         for (int id = 1; id <= EXPECTED_COUNT; id++) {
-            Book book = dao.getById(id);
+            Book book = bookDao.getById(id);
             assertEquals(id, book.getId());
         }
     }
 
     @Test
     public void getAll() {
-        List<Book> list = dao.getAll();
+        List<Book> list = bookDao.getAll();
         assertEquals(EXPECTED_COUNT, list.size());
     }
 
     @Test(expected = EmptyResultDataAccessException.class)
     public void getByWrongId() {
-        dao.getById(EXPECTED_COUNT + 100);
+        bookDao.getById(EXPECTED_COUNT + 100);
     }
 
     @Test
     public void bindAndUnbindGenre() {
-        Book book = dao.getById(5);
+        Book book = bookDao.getById(5);
         int expectedNumberOfGenres = book.getGenres().size();
         Genre genre = genreDao.getById(1);
-        dao.bind(book, genre);
+        bookDao.bind(book, genre);
         checkGenres(book, expectedNumberOfGenres + 1);
-        dao.unbind(book, genre);
+        bookDao.unbind(book, genre);
         checkGenres(book, expectedNumberOfGenres);
     }
 
     private void checkGenres(Book book, int expectedNumberOfGenres) {
-        Book queriedBook = dao.getById(book.getId());
+        Book queriedBook = bookDao.getById(book.getId());
         assertEquals(expectedNumberOfGenres, queriedBook.getGenres().size());
     }
 
     @Test
     public void bindAndUnbindAuthor() {
-        Book book = dao.getById(4);
+        Book book = bookDao.getById(4);
         int expectedNumberOfAuthors = book.getAuthors().size();
         Author author = authorDao.getById(3);
-        dao.bind(book, author);
+        bookDao.bind(book, author);
         checkAuthors(book, expectedNumberOfAuthors + 1);
-        dao.unbind(book, author);
+        bookDao.unbind(book, author);
         checkAuthors(book, expectedNumberOfAuthors);
     }
 
     private void checkAuthors(Book book, int expectedNumberOfAuthors) {
-        Book queriedBook = dao.getById(book.getId());
+        Book queriedBook = bookDao.getById(book.getId());
         assertEquals(expectedNumberOfAuthors, queriedBook.getAuthors().size());
     }
 }

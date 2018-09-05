@@ -1,7 +1,9 @@
 package ru.otus.spring.bookinfo.dao.jpa;
 
 import org.springframework.stereotype.Repository;
+import ru.otus.spring.bookinfo.dao.AuthorDao;
 import ru.otus.spring.bookinfo.dao.BookDao;
+import ru.otus.spring.bookinfo.dao.GenreDao;
 import ru.otus.spring.bookinfo.domain.Author;
 import ru.otus.spring.bookinfo.domain.Book;
 import ru.otus.spring.bookinfo.domain.Genre;
@@ -17,6 +19,14 @@ public class JpaBookDao implements BookDao {
 
     @PersistenceContext
     private EntityManager em;
+
+    private final AuthorDao authorDao;
+    private final GenreDao genreDao;
+
+    public JpaBookDao(AuthorDao authorDao, GenreDao genreDao) {
+        this.authorDao = authorDao;
+        this.genreDao = genreDao;
+    }
 
     @Override
     public int count() {

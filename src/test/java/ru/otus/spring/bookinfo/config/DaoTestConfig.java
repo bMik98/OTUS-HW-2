@@ -9,22 +9,25 @@ import ru.otus.spring.bookinfo.dao.GenreDao;
 import ru.otus.spring.bookinfo.dao.jdbc.JdbcAuthorDao;
 import ru.otus.spring.bookinfo.dao.jdbc.JdbcBookDao;
 import ru.otus.spring.bookinfo.dao.jdbc.JdbcGenreDao;
+import ru.otus.spring.bookinfo.dao.jpa.JpaAuthorDao;
+import ru.otus.spring.bookinfo.dao.jpa.JpaBookDao;
+import ru.otus.spring.bookinfo.dao.jpa.JpaGenreDao;
 
 @TestConfiguration
-public class JdbcTestConfig {
+public class DaoTestConfig {
 
     @Bean
-    public GenreDao jdbcGenreDao(JdbcOperations jdbcOperations) {
-        return new JdbcGenreDao(jdbcOperations);
+    public GenreDao genreDao() {
+        return new JpaGenreDao();
     }
 
     @Bean
-    public AuthorDao jdbcAuthorDao(JdbcOperations jdbcOperations) {
-        return new JdbcAuthorDao(jdbcOperations);
+    public AuthorDao authorDao() {
+        return new JpaAuthorDao();
     }
 
     @Bean
-    public BookDao jdbcBookDao(JdbcOperations jdbcOperations, AuthorDao authorDao, GenreDao genreDao) {
-        return new JdbcBookDao(jdbcOperations, authorDao, genreDao);
+    public BookDao bookDao(AuthorDao authorDao, GenreDao genreDao) {
+        return new JpaBookDao(authorDao, genreDao);
     }
 }
