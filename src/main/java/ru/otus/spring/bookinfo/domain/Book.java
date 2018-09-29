@@ -2,22 +2,24 @@ package ru.otus.spring.bookinfo.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class Book implements BasicEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final int id;
+    private int id;
 
-    private final String name;
+    private String name;
 
     @ManyToMany
     private Set<Genre> genre;
