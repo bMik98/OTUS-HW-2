@@ -4,7 +4,7 @@ import ru.otus.spring.bookinfo.domain.BasicEntity;
 
 import java.util.List;
 
-public interface EntityDao<E extends BasicEntity> {
+public interface BasicEntityDao<E extends BasicEntity> {
 
     int count();
 

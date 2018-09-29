@@ -25,9 +25,9 @@ public class BookCommands extends AbstractCommands<Book> {
 
     @Autowired
     public BookCommands(
-            @Qualifier("jpaBookDao") BookDao bookDao,
-            @Qualifier("jpaGenreDao") GenreDao genreDao,
-            @Qualifier("jpaAuthorDao") AuthorDao authorDao) {
+            @Qualifier("bookJpaDao") BookDao bookDao,
+            @Qualifier("genreJpaDao") GenreDao genreDao,
+            @Qualifier("authorJpaDao") AuthorDao authorDao) {
         super(bookDao);
         this.bookDao = bookDao;
         this.genreDao = genreDao;
@@ -99,7 +99,7 @@ public class BookCommands extends AbstractCommands<Book> {
 
     @Override
     void showEntity(Book book) {
-        System.out.printf("%9d %-38s %-15s %-15s%n", book.getId(), book.getName(), book.getAuthors(), book.getGenres());
+        System.out.printf("%9d %-38s %-15s %-15s%n", book.getId(), book.getName(), book.getAuthor(), book.getGenre());
     }
 
     @Override

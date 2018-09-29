@@ -1,6 +1,6 @@
-insert into AUTHOR (id, name) values (1, 'Maria');
-insert into AUTHOR (id, name) values (2, 'Vasya');
-insert into AUTHOR (id, name) values (3, 'Kostya');
+insert into AUTHOR (name) values ('Maria');
+insert into AUTHOR (id, name) values (default, 'Vasya');
+insert into AUTHOR (id, name) values (default, 'Kostya');
 
 insert into GENRE (id, name) values (1, 'SciFi');
 insert into GENRE (id, name) values (2, 'Documentary');

@@ -4,7 +4,7 @@ import ru.otus.spring.bookinfo.domain.Author;
 import ru.otus.spring.bookinfo.domain.Book;
 import ru.otus.spring.bookinfo.domain.Genre;
 
-public interface BookDao extends EntityDao<Book> {
+public interface BookDao extends BasicEntityDao<Book> {
 
     void unbind(Book book, Author author);
 

@@ -1,12 +1,12 @@
 package ru.otus.spring.bookinfo.shell;
 
-import ru.otus.spring.bookinfo.dao.EntityDao;
+import ru.otus.spring.bookinfo.dao.BasicEntityDao;
 import ru.otus.spring.bookinfo.domain.BasicEntity;
 
 public abstract class AbstractCommands<E extends BasicEntity> {
-    protected final EntityDao<E> dao;
+    protected final BasicEntityDao<E> dao;
 
-    AbstractCommands(EntityDao<E> dao) {
+    AbstractCommands(BasicEntityDao<E> dao) {
         this.dao = dao;
     }
 

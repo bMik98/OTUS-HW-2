@@ -5,25 +5,25 @@ import org.springframework.context.annotation.Bean;
 import ru.otus.spring.bookinfo.dao.AuthorDao;
 import ru.otus.spring.bookinfo.dao.BookDao;
 import ru.otus.spring.bookinfo.dao.GenreDao;
-import ru.otus.spring.bookinfo.dao.jpa.JpaAuthorDao;
-import ru.otus.spring.bookinfo.dao.jpa.JpaBookDao;
-import ru.otus.spring.bookinfo.dao.jpa.JpaGenreDao;
+import ru.otus.spring.bookinfo.dao.jpa.AuthorJpaDao;
+import ru.otus.spring.bookinfo.dao.jpa.BookJpaDao;
+import ru.otus.spring.bookinfo.dao.jpa.GenreJpaDao;
 
 @TestConfiguration
 public class DaoTestConfig {
 
     @Bean
     public GenreDao genreDao() {
-        return new JpaGenreDao();
+        return new GenreJpaDao();
     }
 
     @Bean
     public AuthorDao authorDao() {
-        return new JpaAuthorDao();
+        return new AuthorJpaDao();
     }
 
     @Bean
     public BookDao bookDao(AuthorDao authorDao, GenreDao genreDao) {
-        return new JpaBookDao(authorDao, genreDao);
+        return new BookJpaDao(authorDao, genreDao);
     }
 }

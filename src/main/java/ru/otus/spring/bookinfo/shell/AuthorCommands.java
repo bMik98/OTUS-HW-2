@@ -16,7 +16,7 @@ import javax.validation.constraints.Positive;
 public class AuthorCommands extends AbstractCommands<Author> {
 
     @Autowired
-    public AuthorCommands(@Qualifier("jpaAuthorDao") AuthorDao authorDao) {
+    public AuthorCommands(@Qualifier("authorJpaDao") AuthorDao authorDao) {
         super(authorDao);
     }
 

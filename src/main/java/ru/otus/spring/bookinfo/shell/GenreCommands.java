@@ -16,7 +16,7 @@ import javax.validation.constraints.Positive;
 public class GenreCommands extends AbstractCommands<Genre> {
 
     @Autowired
-    public GenreCommands(@Qualifier("jpaGenreDao") GenreDao genreDao) {
+    public GenreCommands(@Qualifier("genreJpaDao") GenreDao genreDao) {
         super(genreDao);
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 
 @SuppressWarnings("JpaQlInspection")
 @Repository
-public class JpaAuthorDao implements AuthorDao {
+public class AuthorJpaDao implements AuthorDao {
 
     @PersistenceContext
     private EntityManager em;

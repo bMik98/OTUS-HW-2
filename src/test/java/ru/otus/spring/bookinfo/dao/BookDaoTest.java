@@ -77,7 +77,7 @@ public class BookDaoTest {
     @Test
     public void bindAndUnbindGenre() {
         Book book = bookDao.getById(5);
-        int expectedNumberOfGenres = book.getGenres().size();
+        int expectedNumberOfGenres = book.getGenre().size();
         Genre genre = genreDao.getById(1);
         bookDao.bind(book, genre);
         checkGenres(book, expectedNumberOfGenres + 1);
@@ -87,13 +87,13 @@ public class BookDaoTest {
 
     private void checkGenres(Book book, int expectedNumberOfGenres) {
         Book queriedBook = bookDao.getById(book.getId());
-        assertEquals(expectedNumberOfGenres, queriedBook.getGenres().size());
+        assertEquals(expectedNumberOfGenres, queriedBook.getGenre().size());
     }
 
     @Test
     public void bindAndUnbindAuthor() {
         Book book = bookDao.getById(4);
-        int expectedNumberOfAuthors = book.getAuthors().size();
+        int expectedNumberOfAuthors = book.getAuthor().size();
         Author author = authorDao.getById(3);
         bookDao.bind(book, author);
         checkAuthors(book, expectedNumberOfAuthors + 1);
@@ -103,6 +103,6 @@ public class BookDaoTest {
 
     private void checkAuthors(Book book, int expectedNumberOfAuthors) {
         Book queriedBook = bookDao.getById(book.getId());
-        assertEquals(expectedNumberOfAuthors, queriedBook.getAuthors().size());
+        assertEquals(expectedNumberOfAuthors, queriedBook.getAuthor().size());
     }
 }
