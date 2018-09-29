@@ -11,7 +11,7 @@ import ru.otus.spring.bookinfo.domain.Author;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 @ShellComponent
 public class AuthorCommands extends AbstractCommands<Author> {
 
@@ -47,6 +47,6 @@ public class AuthorCommands extends AbstractCommands<Author> {
 
     @Override
     protected Author createEntity(String name) {
-        return new Author(0, name);
+        return new Author(name);
     }
 }

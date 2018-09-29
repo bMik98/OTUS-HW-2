@@ -5,16 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Author implements BasicEntity {
 
     @Id
@@ -22,6 +20,15 @@ public class Author implements BasicEntity {
     private int id;
 
     private String name;
+
+    public Author(String name) {
+        this.name = name;
+    }
+
+    public Author(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     @Override
     public String toString() {

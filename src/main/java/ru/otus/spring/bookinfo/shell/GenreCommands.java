@@ -47,6 +47,6 @@ public class GenreCommands extends AbstractCommands<Genre> {
 
     @Override
     protected Genre createEntity(String name) {
-        return new Genre(0, name);
+        return new Genre(name);
     }
 }

@@ -15,7 +15,7 @@ import ru.otus.spring.bookinfo.domain.Genre;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 @ShellComponent
 public class BookCommands extends AbstractCommands<Book> {
 
@@ -99,7 +99,7 @@ public class BookCommands extends AbstractCommands<Book> {
 
     @Override
     void showEntity(Book book) {
-        System.out.printf("%9d %-38s %-15s %-15s%n", book.getId(), book.getName(), book.getAuthor(), book.getGenre());
+        System.out.printf("%9d %-38s %-15s %-15s%n", book.getId(), book.getName(), book.getAuthors(), book.getGenres());
     }
 
     @Override

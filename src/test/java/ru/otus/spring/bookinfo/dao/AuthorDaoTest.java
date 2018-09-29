@@ -41,7 +41,7 @@ public class AuthorDaoTest {
     @Test
     public void insertGetAndDelete() {
         int before = authorDao.count();
-        authorDao.insert(new Author(0, EXPECTED_NAME));
+        authorDao.insert(new Author(EXPECTED_NAME));
         assertEquals(before + 1, authorDao.count());
         int expectedId = before + 1;
         Author author = authorDao.getById(expectedId);

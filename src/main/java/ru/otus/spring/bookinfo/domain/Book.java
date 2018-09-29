@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Getter
@@ -22,23 +23,15 @@ public class Book implements BasicEntity {
     private String name;
 
     @ManyToMany
-    private Set<Genre> genre;
+    private Collection<Book> genres = new ArrayList<>();
 
     @ManyToMany
-    private Set<Author> author;
+    private Collection<Book> authors = new ArrayList<>();
 
     public Book(int id, String name) {
         this.id = id;
         this.name = name;
     }
-
-//    public void setGenres(Collection<Genre> genres) {
-//        this.genre = new HashSet<>(genres);
-//    }
-//
-//    public void setAuthors(Collection<Author> authors) {
-//        this.author = new HashSet<>(authors);
-//    }
 
     @Override
     public String toString() {

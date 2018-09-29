@@ -40,7 +40,7 @@ public class GenreDaoTest {
     @Test
     public void insertGetAndDelete() {
         int before = genreDao.count();
-        genreDao.insert(new Genre(0, EXPECTED_NAME));
+        genreDao.insert(new Genre(EXPECTED_NAME));
         assertEquals(before + 1, genreDao.count());
         int expectedId = before + 1;
         Genre genre = genreDao.getById(expectedId);
