@@ -7,6 +7,7 @@ import ru.otus.spring.bookinfo.domain.Genre;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -19,7 +20,10 @@ public class GenreJpaDao implements GenreDao {
 
     @Override
     public int count() {
-        return 0;
+        TypedQuery<Long> query = em.createQuery(
+                "select count(e) from Genre e",
+                Long.class);
+        return query.getSingleResult().intValue();
     }
 
     @Override
@@ -29,9 +33,7 @@ public class GenreJpaDao implements GenreDao {
 
     @Override
     public void delete(Genre entity) {
-        TypedQuery<Genre> query = em.createQuery(
-                "select e from Genre e where e.id = :id",
-                Genre.class);
+        Query query = em.createQuery("delete from Genre e where e.id = :id");
         query.setParameter("id", entity.getId());
         query.executeUpdate();
     }

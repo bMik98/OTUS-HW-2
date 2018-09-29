@@ -61,11 +61,7 @@ public class GenreDaoTest {
     @Test
     public void getAll() {
         List<Genre> listBefore = genreDao.getAll();
-        assertEquals(0, listBefore.size());
-        genreDao.insert(new Genre(0, "test"));
-        assertEquals(1, genreDao.getAll().size());
-        genreDao.insert(new Genre(0, "test2"));
-        assertEquals(2, genreDao.getAll().size());
+        assertEquals(EXPECTED_COUNT, listBefore.size());
     }
 
     @Test
