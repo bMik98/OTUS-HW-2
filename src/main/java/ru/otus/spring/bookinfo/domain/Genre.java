@@ -6,7 +6,6 @@ import lombok.Getter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "GENRES")
 @Getter
 @AllArgsConstructor
 public class Genre implements BasicEntity {

@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.otus.spring.bookinfo.config.DaoTestConfig;
 import ru.otus.spring.bookinfo.domain.Book;
@@ -14,7 +13,7 @@ import ru.otus.spring.bookinfo.domain.Genre;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -54,19 +53,25 @@ public class GenreDaoTest {
     public void getById() {
         for (int id = 1; id <= EXPECTED_COUNT; id++) {
             Genre genre = genreDao.getById(id);
+            assertNotNull(genre);
             assertEquals(id, genre.getId());
         }
     }
 
     @Test
     public void getAll() {
-        List<Genre> list = genreDao.getAll();
-        assertEquals(EXPECTED_COUNT, list.size());
+        List<Genre> listBefore = genreDao.getAll();
+        assertEquals(0, listBefore.size());
+        genreDao.insert(new Genre(0, "test"));
+        assertEquals(1, genreDao.getAll().size());
+        genreDao.insert(new Genre(0, "test2"));
+        assertEquals(2, genreDao.getAll().size());
     }
 
-    @Test(expected = EmptyResultDataAccessException.class)
+    @Test
     public void getByWrongId() {
-        genreDao.getById(EXPECTED_COUNT + 100);
+        Genre genre = genreDao.getById(EXPECTED_COUNT + 100);
+        assertNull(genre);
     }
 
     @Test

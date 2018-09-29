@@ -29,7 +29,10 @@ public class JpaGenreDao implements GenreDao {
 
     @Override
     public void delete(Genre entity) {
-
+        TypedQuery<Genre> query = em.createQuery(
+                "select e from Genre e where e.id = :id",
+                Genre.class);
+        query.setParameter("id", entity.getId());
     }
 
     @Override
@@ -46,9 +49,7 @@ public class JpaGenreDao implements GenreDao {
 
     @Override
     public List<Genre> getAll() {
-        TypedQuery<Genre> query = em.createQuery(
-                "select e from Genre e",
-                Genre.class);
+        TypedQuery<Genre> query = em.createQuery("select e from Genre e", Genre.class);
         return query.getResultList();
     }
 
