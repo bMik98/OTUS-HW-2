@@ -11,5 +11,8 @@ public class AuthorService extends BasicEntityService<Author> {
         super(authorDao);
     }
 
+    public void insert(String name) {
+        dao.save(new Author(name));
+    }
 
 }

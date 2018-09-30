@@ -1,52 +1,51 @@
 package ru.otus.spring.bookinfo.shell;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import ru.otus.spring.bookinfo.dao.GenreDao;
 import ru.otus.spring.bookinfo.domain.Genre;
+import ru.otus.spring.bookinfo.service.GenreService;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 @ShellComponent
-public class GenreCommands extends AbstractCommands<Genre> {
+public class GenreCommands {
 
-    @Autowired
-    public GenreCommands(@Qualifier("genreJpaDao") GenreDao genreDao) {
-        super(genreDao);
+    private final GenreService service;
+
+    public GenreCommands(GenreService genreService) {
+        this.service = genreService;
     }
 
     @ShellMethod("Display the number of genres")
     public void countGenres() {
-        showCount();
+        ShowUtils.showEntityCount(service.count());
     }
 
     @ShellMethod("Insert new genre")
     public void insertGenre(@ShellOption @NotEmpty String name) {
-        insertEntity(name);
+        service.insert(name);
+        listGenres();
     }
 
     @ShellMethod("Delete a genre by ID")
     public void deleteGenre(@ShellOption @Positive int id) {
-        deleteEntity(id);
+        service.delete(id);
+        listGenres();
     }
 
     @ShellMethod("Find a genre by ID")
     public void getGenre(@ShellOption @Positive int id) {
-        getEntity(id);
+        Genre entity = service.getById(id);
+        ShowUtils.showEntity(entity);
     }
 
     @ShellMethod("Display all the genres")
     public void listGenres() {
-        listEntities();
-    }
-
-    @Override
-    protected Genre createEntity(String name) {
-        return new Genre(name);
+        List<Genre> entries = service.getAll();
+        ShowUtils.showEntityList(entries);
     }
 }

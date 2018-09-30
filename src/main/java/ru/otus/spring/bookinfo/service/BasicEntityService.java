@@ -25,6 +25,13 @@ public abstract class BasicEntityService<E extends BasicEntity> {
         dao.delete(entity);
     }
 
+    public void delete(int id) {
+        E entity = dao.getById(id);
+        if (entity != null) {
+            dao.delete(entity);
+        }
+    }
+
     public E getById(int id) {
         return dao.getById(id);
     }

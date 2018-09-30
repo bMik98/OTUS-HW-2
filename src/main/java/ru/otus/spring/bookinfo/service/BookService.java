@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.otus.spring.bookinfo.dao.AuthorDao;
 import ru.otus.spring.bookinfo.dao.BookDao;
 import ru.otus.spring.bookinfo.dao.GenreDao;
+import ru.otus.spring.bookinfo.domain.Author;
 import ru.otus.spring.bookinfo.domain.Book;
 
 @Service
@@ -18,5 +19,8 @@ public class BookService extends BasicEntityService<Book> {
         this.authorDao = authorDao;
     }
 
+    public void insert(String name) {
+        dao.save(new Book(name));
+    }
 
 }

@@ -1,62 +1,52 @@
 package ru.otus.spring.bookinfo.shell;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import ru.otus.spring.bookinfo.dao.AuthorDao;
-import ru.otus.spring.bookinfo.dao.BookDao;
-import ru.otus.spring.bookinfo.dao.GenreDao;
-import ru.otus.spring.bookinfo.domain.Author;
 import ru.otus.spring.bookinfo.domain.Book;
-import ru.otus.spring.bookinfo.domain.Genre;
+import ru.otus.spring.bookinfo.service.BookService;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 @SuppressWarnings({"unused", "WeakerAccess"})
 @ShellComponent
-public class BookCommands extends AbstractCommands<Book> {
+public class BookCommands {
 
-    private final BookDao bookDao;
-    private final GenreDao genreDao;
-    private final AuthorDao authorDao;
+    private final BookService service;
 
-    @Autowired
-    public BookCommands(
-            @Qualifier("bookJpaDao") BookDao bookDao,
-            @Qualifier("genreJpaDao") GenreDao genreDao,
-            @Qualifier("authorJpaDao") AuthorDao authorDao) {
-        super(bookDao);
-        this.bookDao = bookDao;
-        this.genreDao = genreDao;
-        this.authorDao = authorDao;
+    public BookCommands(BookService bookService) {
+        this.service = bookService;
     }
 
     @ShellMethod("Display the number of Books")
     public void countBooks() {
-        showCount();
+        ShowUtils.showEntityCount(service.count());
     }
 
     @ShellMethod("Insert new Book")
     public void insertBook(@ShellOption @NotEmpty String name) {
-        insertEntity(name);
+        service.insert(name);
+        listBooks();
     }
 
     @ShellMethod("Delete Book by ID")
     public void deleteBook(@ShellOption @Positive int id) {
-        deleteEntity(id);
+        service.delete(id);
+        listBooks();
     }
 
     @ShellMethod("Find Book by ID")
     public void getBook(@ShellOption @Positive int id) {
-        getEntity(id);
+        Book book = service.getById(id);
+        ShowUtils.showBook(book);
     }
 
     @ShellMethod("Display all the Books")
     public void listBooks() {
-        listEntities();
+        List<Book> entries = service.getAll();
+        ShowUtils.showBookList(entries);
     }
 
 //    @ShellMethod("Bind a genre with a book")
@@ -91,19 +81,5 @@ public class BookCommands extends AbstractCommands<Book> {
 //        getEntity(bookId);
 //    }
 
-    @Override
-    void showTitle() {
-        System.out.println("ID        Name                                   Authors         Genres");
-        System.out.println("--------- -------------------------------------- --------------- ---------------");
-    }
 
-    @Override
-    void showEntity(Book book) {
-        System.out.printf("%9d %-38s %-15s %-15s%n", book.getId(), book.getName(), book.getAuthors(), book.getGenres());
-    }
-
-    @Override
-    protected Book createEntity(String name) {
-        return new Book(0, name);
-    }
 }

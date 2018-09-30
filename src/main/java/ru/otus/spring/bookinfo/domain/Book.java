@@ -31,6 +31,10 @@ public class Book implements BasicEntity {
         this.name = name;
     }
 
+    public Book(String name) {
+        this.name = name;
+    }
+
     public void addGenre(Genre genre) {
         if (!getGenres().contains(genre)) {
             getGenres().add(genre);
