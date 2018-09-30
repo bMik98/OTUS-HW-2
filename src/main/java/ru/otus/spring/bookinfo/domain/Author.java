@@ -1,6 +1,5 @@
 package ru.otus.spring.bookinfo.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +20,9 @@ public class Author implements BasicEntity {
 
     private String name;
 
+    @ManyToMany(mappedBy = "authors")
+    private Collection<Book> books = new ArrayList<>();
+
     public Author(String name) {
         this.name = name;
     }
@@ -28,6 +30,15 @@ public class Author implements BasicEntity {
     public Author(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public void addBook(Book book) {
+        if (!getBooks().contains(book)) {
+            getBooks().add(book);
+        }
+        if (!book.getAuthors().contains(this)) {
+            book.getAuthors().add(this);
+        }
     }
 
     @Override

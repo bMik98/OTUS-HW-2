@@ -77,4 +77,20 @@ public class GenreDaoTest {
         List<Genre> genres2 = genreDao.getByBook(BOOK_2);
         assertEquals(2, genres2.size());
     }
+
+    @Test
+    public void update() {
+        List<Genre> genres = genreDao.getAll();
+        int count = genres.size();
+        assertTrue(count > 0);
+        Genre genre = genres.get(0);
+        int id = genre.getId();
+        String oldName = genre.getName();
+        genre.setName(EXPECTED_NAME);
+        assertNotEquals(EXPECTED_NAME, oldName);
+        genreDao.insert(genre);
+        assertEquals("The number of genres has not been changed", count, genreDao.getAll().size());
+        Genre updatedGenre = genreDao.getById(id);
+        assertEquals(EXPECTED_NAME, updatedGenre.getName());
+    }
 }
