@@ -1,5 +1,6 @@
 package ru.otus.spring.bookinfo.dao.jpa;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring.bookinfo.dao.AuthorDao;
 import ru.otus.spring.bookinfo.domain.Author;
@@ -10,6 +11,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
+@Qualifier("authorDao")
 @SuppressWarnings("JpaQlInspection")
 public class AuthorJpaDao implements AuthorDao {
 

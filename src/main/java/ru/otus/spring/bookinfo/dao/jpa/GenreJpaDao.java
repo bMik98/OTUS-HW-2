@@ -1,5 +1,6 @@
 package ru.otus.spring.bookinfo.dao.jpa;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring.bookinfo.dao.GenreDao;
 import ru.otus.spring.bookinfo.domain.Genre;
@@ -10,6 +11,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
+@Qualifier("genreDao")
 @SuppressWarnings("JpaQlInspection")
 public class GenreJpaDao implements GenreDao {
 
