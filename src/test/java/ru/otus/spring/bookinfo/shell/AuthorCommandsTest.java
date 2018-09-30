@@ -6,13 +6,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import ru.otus.spring.bookinfo.dao.AuthorDao;
 import ru.otus.spring.bookinfo.domain.Author;
+import ru.otus.spring.bookinfo.service.AuthorService;
 
 import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
@@ -26,49 +25,49 @@ public class AuthorCommandsTest {
     private static final List<Author> expectedAuthors = Collections.singletonList(expectedAuthor);
 
     @Mock
-    private AuthorDao daoMock;
+    private AuthorService serviceMock;
 
     private AuthorCommands commands;
 
     @Before
     public void setUp() {
-        commands = new AuthorCommands(daoMock);
-        when(daoMock.getById(ID)).thenReturn(expectedAuthor);
-        when(daoMock.getAll()).thenReturn(expectedAuthors);
+        commands = new AuthorCommands(serviceMock);
+        when(serviceMock.getById(ID)).thenReturn(expectedAuthor);
+        when(serviceMock.getAll()).thenReturn(expectedAuthors);
     }
 
     @Test
     public void countAuthors() {
         commands.countAuthors();
-        Mockito.verify(daoMock, times(1))
+        Mockito.verify(serviceMock, times(1))
                 .count();
     }
 
     @Test
     public void insertAuthor() {
-        commands.insertAuthor("any");
-        Mockito.verify(daoMock, times(1))
-                .save(any(Author.class));
+        commands.insertAuthor(NAME);
+        Mockito.verify(serviceMock, times(1))
+                .insert(eq(NAME));
     }
 
     @Test
     public void deleteAuthor() {
         commands.deleteAuthor(ID);
-        Mockito.verify(daoMock, times(1))
-                .delete(any(Author.class));
+        Mockito.verify(serviceMock, times(1))
+                .delete(eq(ID));
     }
 
     @Test
     public void getAuthor() {
         commands.getAuthor(ID);
-        Mockito.verify(daoMock, times(1))
+        Mockito.verify(serviceMock, times(1))
                 .getById(eq(ID));
     }
 
     @Test
     public void listAuthors() {
         commands.listAuthors();
-        Mockito.verify(daoMock, times(1))
+        Mockito.verify(serviceMock, times(1))
                 .getAll();
     }
 }

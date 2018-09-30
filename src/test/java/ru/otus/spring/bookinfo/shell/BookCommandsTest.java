@@ -6,15 +6,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import ru.otus.spring.bookinfo.dao.AuthorDao;
-import ru.otus.spring.bookinfo.dao.BookDao;
-import ru.otus.spring.bookinfo.dao.GenreDao;
 import ru.otus.spring.bookinfo.domain.Book;
+import ru.otus.spring.bookinfo.service.BookService;
 
 import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
@@ -28,53 +25,51 @@ public class BookCommandsTest {
     private static final List<Book> expectedBooks = Collections.singletonList(expectedBook);
 
     @Mock
-    private BookDao daoMock;
-    @Mock
-    private AuthorDao authorDaoMock;
-    @Mock
-    private GenreDao genreDaoMock;
+    private BookService serviceMock;
 
     private BookCommands commands;
 
     @Before
     public void setUp() {
-        commands = new BookCommands(daoMock, genreDaoMock, authorDaoMock);
-        when(daoMock.getById(ID)).thenReturn(expectedBook);
-        when(daoMock.getAll()).thenReturn(expectedBooks);
+        commands = new BookCommands(serviceMock);
+        when(serviceMock.getById(ID))
+                .thenReturn(expectedBook);
+        when(serviceMock.getAll())
+                .thenReturn(expectedBooks);
     }
 
     @Test
     public void countBooks() {
         commands.countBooks();
-        Mockito.verify(daoMock, times(1))
+        Mockito.verify(serviceMock, times(1))
                 .count();
     }
 
     @Test
     public void insertBook() {
-        commands.insertBook("any");
-        Mockito.verify(daoMock, times(1))
-                .save(any(Book.class));
+        commands.insertBook(NAME);
+        Mockito.verify(serviceMock, times(1))
+                .insert(eq(NAME));
     }
 
     @Test
     public void deleteBook() {
         commands.deleteBook(ID);
-        Mockito.verify(daoMock, times(1))
-                .delete(any(Book.class));
+        Mockito.verify(serviceMock, times(1))
+                .delete(eq(ID));
     }
 
     @Test
     public void getBook() {
         commands.getBook(ID);
-        Mockito.verify(daoMock, times(1))
+        Mockito.verify(serviceMock, times(1))
                 .getById(eq(ID));
     }
 
     @Test
     public void listBooks() {
         commands.listBooks();
-        Mockito.verify(daoMock, times(1))
+        Mockito.verify(serviceMock, times(1))
                 .getAll();
     }
 }

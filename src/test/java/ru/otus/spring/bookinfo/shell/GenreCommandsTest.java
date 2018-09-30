@@ -6,13 +6,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import ru.otus.spring.bookinfo.dao.GenreDao;
 import ru.otus.spring.bookinfo.domain.Genre;
+import ru.otus.spring.bookinfo.service.GenreService;
 
 import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
@@ -26,49 +25,49 @@ public class GenreCommandsTest {
     private static final List<Genre> expectedGenres = Collections.singletonList(expectedGenre);
 
     @Mock
-    private GenreDao daoMock;
+    private GenreService serviceMock;
 
     private GenreCommands commands;
 
     @Before
     public void setUp() {
-        commands = new GenreCommands(daoMock);
-        when(daoMock.getById(ID)).thenReturn(expectedGenre);
-        when(daoMock.getAll()).thenReturn(expectedGenres);
+        commands = new GenreCommands(serviceMock);
+        when(serviceMock.getById(ID)).thenReturn(expectedGenre);
+        when(serviceMock.getAll()).thenReturn(expectedGenres);
     }
 
     @Test
     public void countGenres() {
         commands.countGenres();
-        Mockito.verify(daoMock, times(1))
+        Mockito.verify(serviceMock, times(1))
                 .count();
     }
 
     @Test
     public void insertGenre() {
-        commands.insertGenre("any");
-        Mockito.verify(daoMock, times(1))
-                .save(any(Genre.class));
+        commands.insertGenre(NAME);
+        Mockito.verify(serviceMock, times(1))
+                .insert(eq(NAME));
     }
 
     @Test
     public void deleteGenre() {
         commands.deleteGenre(ID);
-        Mockito.verify(daoMock, times(1))
-                .delete(any(Genre.class));
+        Mockito.verify(serviceMock, times(1))
+                .delete(eq(ID));
     }
 
     @Test
     public void getGenre() {
         commands.getGenre(ID);
-        Mockito.verify(daoMock, times(1))
+        Mockito.verify(serviceMock, times(1))
                 .getById(eq(ID));
     }
 
     @Test
     public void listGenres() {
         commands.listGenres();
-        Mockito.verify(daoMock, times(1))
+        Mockito.verify(serviceMock, times(1))
                 .getAll();
     }
 }
