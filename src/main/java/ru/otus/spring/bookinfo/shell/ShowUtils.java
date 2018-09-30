@@ -35,7 +35,7 @@ class ShowUtils {
 
     static void showBook(Book entity) {
         displayBookTitle();
-        displaySingleEntity(entity);
+        displayBook(entity);
     }
 
     static void showBookList(List<Book> entities) {

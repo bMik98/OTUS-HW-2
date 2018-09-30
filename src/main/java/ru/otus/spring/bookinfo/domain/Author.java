@@ -32,14 +32,14 @@ public class Author implements BasicEntity {
         this.name = name;
     }
 
-    public void addBook(Book book) {
-        if (!getBooks().contains(book)) {
-            getBooks().add(book);
-        }
-        if (!book.getAuthors().contains(this)) {
-            book.getAuthors().add(this);
-        }
-    }
+//    public void addBook(Book book) {
+//        if (!getBooks().contains(book)) {
+//            getBooks().add(book);
+//        }
+//        if (!book.getAuthors().contains(this)) {
+//            book.getAuthors().add(this);
+//        }
+//    }
 
     @Override
     public String toString() {

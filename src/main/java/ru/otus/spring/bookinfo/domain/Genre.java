@@ -32,14 +32,14 @@ public class Genre implements BasicEntity {
         this.name = name;
     }
 
-    public void addBook(Book book) {
-        if (!getBooks().contains(book)) {
-            getBooks().add(book);
-        }
-        if (!book.getGenres().contains(this)) {
-            book.getGenres().add(this);
-        }
-    }
+//    public void addBook(Book book) {
+//        if (!getBooks().contains(book)) {
+//            getBooks().add(book);
+//        }
+//        if (!book.getGenres().contains(this)) {
+//            book.getGenres().add(this);
+//        }
+//    }
 
     @Override
     public String toString() {
