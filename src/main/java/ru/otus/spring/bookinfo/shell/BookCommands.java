@@ -59,37 +59,37 @@ public class BookCommands extends AbstractCommands<Book> {
         listEntities();
     }
 
-    @ShellMethod("Bind a genre with a book")
-    public void bindGenre(int bookId, int genreId) {
-        Book book = bookDao.getById(bookId);
-        Genre genre = genreDao.getById(genreId);
-        bookDao.bind(book, genre);
-        getEntity(bookId);
-    }
-
-    @ShellMethod("Bind an author with a book")
-    public void bindAuthor(int bookId, int authorId) {
-        Book book = bookDao.getById(bookId);
-        Author author = authorDao.getById(authorId);
-        bookDao.bind(book, author);
-        getEntity(bookId);
-    }
-
-    @ShellMethod("Unbind a genre from a book")
-    public void unbindGenre(int bookId, int genreId) {
-        Book book = bookDao.getById(bookId);
-        Genre genre = genreDao.getById(genreId);
-        bookDao.unbind(book, genre);
-        getEntity(bookId);
-    }
-
-    @ShellMethod("Unbind an author from a book")
-    public void unbindAuthor(int bookId, int authorId) {
-        Book book = bookDao.getById(bookId);
-        Author author = authorDao.getById(authorId);
-        bookDao.unbind(book, author);
-        getEntity(bookId);
-    }
+//    @ShellMethod("Bind a genre with a book")
+//    public void bindGenre(int bookId, int genreId) {
+//        Book book = bookDao.getById(bookId);
+//        Genre genre = genreDao.getById(genreId);
+//        bookDao.bind(book, genre);
+//        getEntity(bookId);
+//    }
+//
+//    @ShellMethod("Bind an author with a book")
+//    public void bindAuthor(int bookId, int authorId) {
+//        Book book = bookDao.getById(bookId);
+//        Author author = authorDao.getById(authorId);
+//        bookDao.bind(book, author);
+//        getEntity(bookId);
+//    }
+//
+//    @ShellMethod("Unbind a genre from a book")
+//    public void unbindGenre(int bookId, int genreId) {
+//        Book book = bookDao.getById(bookId);
+//        Genre genre = genreDao.getById(genreId);
+//        bookDao.unbind(book, genre);
+//        getEntity(bookId);
+//    }
+//
+//    @ShellMethod("Unbind an author from a book")
+//    public void unbindAuthor(int bookId, int authorId) {
+//        Book book = bookDao.getById(bookId);
+//        Author author = authorDao.getById(authorId);
+//        bookDao.unbind(book, author);
+//        getEntity(bookId);
+//    }
 
     @Override
     void showTitle() {

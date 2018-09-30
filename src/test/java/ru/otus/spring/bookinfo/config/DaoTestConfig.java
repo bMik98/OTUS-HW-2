@@ -23,7 +23,7 @@ public class DaoTestConfig {
     }
 
     @Bean
-    public BookDao bookDao(AuthorDao authorDao, GenreDao genreDao) {
-        return new BookJpaDao(authorDao, genreDao);
+    public BookDao bookDao() {
+        return new BookJpaDao();
     }
 }

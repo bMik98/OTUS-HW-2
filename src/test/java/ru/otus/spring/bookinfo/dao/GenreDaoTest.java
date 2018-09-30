@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.otus.spring.bookinfo.config.DaoTestConfig;
@@ -15,22 +16,17 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
+@SpringBootTest
+@RunWith(SpringRunner.class)
 @Import(DaoTestConfig.class)
 public class GenreDaoTest {
 
     private static final int EXPECTED_COUNT = 5;
     private static final String EXPECTED_NAME = "TestName";
-    private static final Book BOOK = new Book(4, "");
-    private static final Book BOOK_2 = new Book(5, "");
 
     @Autowired
     private GenreDao genreDao;
-
-    @Before
-    public void setUp() {
-    }
 
     @Test
     public void count() {
@@ -68,14 +64,6 @@ public class GenreDaoTest {
     public void getByWrongId() {
         Genre genre = genreDao.getById(EXPECTED_COUNT + 100);
         assertNull(genre);
-    }
-
-    @Test
-    public void getByBook() {
-        List<Genre> genres = genreDao.getByBook(BOOK);
-        assertEquals(1, genres.size());
-        List<Genre> genres2 = genreDao.getByBook(BOOK_2);
-        assertEquals(2, genres2.size());
     }
 
     @Test

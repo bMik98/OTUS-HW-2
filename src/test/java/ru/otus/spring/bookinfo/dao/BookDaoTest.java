@@ -5,20 +5,20 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.test.context.junit4.SpringRunner;
 import ru.otus.spring.bookinfo.config.DaoTestConfig;
-import ru.otus.spring.bookinfo.domain.Author;
 import ru.otus.spring.bookinfo.domain.Book;
-import ru.otus.spring.bookinfo.domain.Genre;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
+@SpringBootTest
+@RunWith(SpringRunner.class)
 @Import(DaoTestConfig.class)
 public class BookDaoTest {
 
@@ -27,16 +27,6 @@ public class BookDaoTest {
 
     @Autowired
     private BookDao bookDao;
-
-    @Autowired
-    private GenreDao genreDao;
-
-    @Autowired
-    private AuthorDao authorDao;
-
-    @Before
-    public void setUp() {
-    }
 
     @Test
     public void count() {
@@ -69,37 +59,38 @@ public class BookDaoTest {
         assertEquals(EXPECTED_COUNT, list.size());
     }
 
-    @Test(expected = EmptyResultDataAccessException.class)
+    @Test
     public void getByWrongId() {
-        bookDao.getById(EXPECTED_COUNT + 100);
+        Book book = bookDao.getById(EXPECTED_COUNT + 100);
+        assertNull(book);
     }
 
-    @Test
-    public void bindAndUnbindGenre() {
-        Book book = bookDao.getById(5);
-        int expectedNumberOfGenres = book.getGenres().size();
-        Genre genre = genreDao.getById(1);
-        bookDao.bind(book, genre);
-        checkGenres(book, expectedNumberOfGenres + 1);
-        bookDao.unbind(book, genre);
-        checkGenres(book, expectedNumberOfGenres);
-    }
+//    @Test
+//    public void bindAndUnbindGenre() {
+//        Book book = bookDao.getById(5);
+//        int expectedNumberOfGenres = book.getGenres().size();
+//        Genre genre = genreDao.getById(1);
+//        bookDao.bind(book, genre);
+//        checkGenres(book, expectedNumberOfGenres + 1);
+//        bookDao.unbind(book, genre);
+//        checkGenres(book, expectedNumberOfGenres);
+//    }
 
     private void checkGenres(Book book, int expectedNumberOfGenres) {
         Book queriedBook = bookDao.getById(book.getId());
         assertEquals(expectedNumberOfGenres, queriedBook.getGenres().size());
     }
 
-    @Test
-    public void bindAndUnbindAuthor() {
-        Book book = bookDao.getById(4);
-        int expectedNumberOfAuthors = book.getAuthors().size();
-        Author author = authorDao.getById(3);
-        bookDao.bind(book, author);
-        checkAuthors(book, expectedNumberOfAuthors + 1);
-        bookDao.unbind(book, author);
-        checkAuthors(book, expectedNumberOfAuthors);
-    }
+//    @Test
+//    public void bindAndUnbindAuthor() {
+//        Book book = bookDao.getById(4);
+//        int expectedNumberOfAuthors = book.getAuthors().size();
+//        Author author = authorDao.getById(3);
+//        bookDao.bind(book, author);
+//        checkAuthors(book, expectedNumberOfAuthors + 1);
+//        bookDao.unbind(book, author);
+//        checkAuthors(book, expectedNumberOfAuthors);
+//    }
 
     private void checkAuthors(Book book, int expectedNumberOfAuthors) {
         Book queriedBook = bookDao.getById(book.getId());
