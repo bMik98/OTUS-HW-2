@@ -7,6 +7,7 @@ import ru.otus.spring.bookinfo.domain.Author;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class AuthorJpaDao implements AuthorDao {
     private static final String COUNT_QUERY = "select count(e) from Author e";
     private static final String SELECT_ALL_QUERY = "select e from Author e";
 
-    @PersistenceContext
+    @PersistenceContext(type = PersistenceContextType.EXTENDED)
     private EntityManager em;
 
     @Override
