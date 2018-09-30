@@ -12,7 +12,7 @@ public class AuthorService extends BasicEntityService<Author> {
     }
 
     public void insert(String name) {
-        dao.save(new Author(name));
+        save(new Author(name));
     }
 
 }

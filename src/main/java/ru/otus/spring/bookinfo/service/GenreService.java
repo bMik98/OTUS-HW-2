@@ -12,7 +12,7 @@ public class GenreService extends BasicEntityService<Genre> {
     }
 
     public void insert(String name) {
-        dao.save(new Genre(name));
+        save(new Genre(name));
     }
 }
 

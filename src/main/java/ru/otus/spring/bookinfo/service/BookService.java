@@ -11,32 +11,32 @@ import ru.otus.spring.bookinfo.domain.Genre;
 @Service
 public class BookService extends BasicEntityService<Book> {
 
-    private final GenreDao genreDao;
-    private final AuthorDao authorDao;
+    private final GenreService genreService;
+    private final AuthorService authorService;
 
-    public BookService(BookDao bookDao, GenreDao genreDao, AuthorDao authorDao) {
+    public BookService(BookDao bookDao, GenreService genreService, AuthorService authorService) {
         super(bookDao);
-        this.genreDao = genreDao;
-        this.authorDao = authorDao;
+        this.genreService = genreService;
+        this.authorService = authorService;
     }
 
     public void insert(String name) {
-        dao.save(new Book(name));
+        save(new Book(name));
     }
 
     public void bindBookWithGenre(int bookId, int genreId) {
-        Genre genre = genreDao.getById(genreId);
-        Book book = dao.getById(bookId);
+        Genre genre = genreService.getById(genreId);
+        Book book = getById(bookId);
         book.addGenre(genre);
-        dao.save(book);
-        genreDao.save(genre);
+        save(book);
+        genreService.save(genre);
     }
 
     public void bindBookWithAuthor(int bookId, int authorId) {
-        Author author = authorDao.getById(authorId);
-        Book book = dao.getById(bookId);
+        Author author = authorService.getById(authorId);
+        Book book = getById(bookId);
         book.addAuthor(author);
-        dao.save(book);
-        authorDao.save(author);
+        save(book);
+        authorService.save(author);
     }
 }
