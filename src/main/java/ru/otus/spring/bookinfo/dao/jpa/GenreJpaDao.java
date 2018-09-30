@@ -27,7 +27,7 @@ public class GenreJpaDao implements GenreDao {
     }
 
     @Override
-    public void insert(Genre p) {
+    public void save(Genre p) {
         em.persist(p);
     }
 

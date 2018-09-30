@@ -15,7 +15,7 @@ public abstract class AbstractCommands<E extends BasicEntity> {
     }
 
     void insertEntity(String name) {
-        dao.insert(createEntity(name));
+        dao.save(createEntity(name));
         listEntities();
     }
 

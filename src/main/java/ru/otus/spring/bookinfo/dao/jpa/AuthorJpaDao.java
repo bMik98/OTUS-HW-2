@@ -23,7 +23,7 @@ public class AuthorJpaDao implements AuthorDao {
     }
 
     @Override
-    public void insert(Author p) {
+    public void save(Author p) {
         em.persist(p);
     }
 

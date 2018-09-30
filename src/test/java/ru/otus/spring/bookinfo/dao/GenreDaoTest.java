@@ -40,7 +40,7 @@ public class GenreDaoTest {
     @Test
     public void insertGetAndDelete() {
         int before = genreDao.count();
-        genreDao.insert(new Genre(EXPECTED_NAME));
+        genreDao.save(new Genre(EXPECTED_NAME));
         assertEquals(before + 1, genreDao.count());
         int expectedId = before + 1;
         Genre genre = genreDao.getById(expectedId);
@@ -88,7 +88,7 @@ public class GenreDaoTest {
         String oldName = genre.getName();
         genre.setName(EXPECTED_NAME);
         assertNotEquals(EXPECTED_NAME, oldName);
-        genreDao.insert(genre);
+        genreDao.save(genre);
         assertEquals("The number of genres has not been changed", count, genreDao.getAll().size());
         Genre updatedGenre = genreDao.getById(id);
         assertEquals(EXPECTED_NAME, updatedGenre.getName());

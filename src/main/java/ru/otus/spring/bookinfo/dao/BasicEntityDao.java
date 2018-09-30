@@ -8,7 +8,7 @@ public interface BasicEntityDao<E extends BasicEntity> {
 
     int count();
 
-    void insert(E entity);
+    void save(E entity);
 
     void delete(E entity);
 

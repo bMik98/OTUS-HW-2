@@ -46,7 +46,7 @@ public class BookDaoTest {
     @Test
     public void insertGetAndDelete() {
         int before = bookDao.count();
-        bookDao.insert(new Book(0, EXPECTED_NAME));
+        bookDao.save(new Book(0, EXPECTED_NAME));
         assertEquals(before + 1, bookDao.count());
         int expectedId = before + 1;
         Book book = bookDao.getById(expectedId);

@@ -48,7 +48,7 @@ public class GenreCommandsTest {
     public void insertGenre() {
         commands.insertGenre("any");
         Mockito.verify(daoMock, times(1))
-                .insert(any(Genre.class));
+                .save(any(Genre.class));
     }
 
     @Test

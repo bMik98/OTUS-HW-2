@@ -48,7 +48,7 @@ public class AuthorCommandsTest {
     public void insertAuthor() {
         commands.insertAuthor("any");
         Mockito.verify(daoMock, times(1))
-                .insert(any(Author.class));
+                .save(any(Author.class));
     }
 
     @Test

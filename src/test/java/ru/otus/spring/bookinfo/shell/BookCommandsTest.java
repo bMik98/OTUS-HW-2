@@ -54,7 +54,7 @@ public class BookCommandsTest {
     public void insertBook() {
         commands.insertBook("any");
         Mockito.verify(daoMock, times(1))
-                .insert(any(Book.class));
+                .save(any(Book.class));
     }
 
     @Test

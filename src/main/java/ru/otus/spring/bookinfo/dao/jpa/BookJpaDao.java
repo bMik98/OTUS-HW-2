@@ -34,7 +34,7 @@ public class BookJpaDao implements BookDao {
     }
 
     @Override
-    public void insert(Book p) {
+    public void save(Book p) {
         em.persist(p);
     }
 
