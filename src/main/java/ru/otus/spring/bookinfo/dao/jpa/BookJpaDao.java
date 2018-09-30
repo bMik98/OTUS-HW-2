@@ -1,36 +1,28 @@
 package ru.otus.spring.bookinfo.dao.jpa;
 
 import org.springframework.stereotype.Repository;
-import ru.otus.spring.bookinfo.dao.AuthorDao;
 import ru.otus.spring.bookinfo.dao.BookDao;
-import ru.otus.spring.bookinfo.dao.GenreDao;
-import ru.otus.spring.bookinfo.domain.Author;
 import ru.otus.spring.bookinfo.domain.Book;
-import ru.otus.spring.bookinfo.domain.Genre;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-@SuppressWarnings("JpaQlInspection")
 @Repository
+@SuppressWarnings("JpaQlInspection")
 public class BookJpaDao implements BookDao {
+
+    private static final String COUNT_QUERY = "select count(e) from Book e";
+    private static final String SELECT_ALL_QUERY = "select e from Book e";
 
     @PersistenceContext
     private EntityManager em;
 
-    private final AuthorDao authorDao;
-    private final GenreDao genreDao;
-
-    public BookJpaDao(AuthorDao authorDao, GenreDao genreDao) {
-        this.authorDao = authorDao;
-        this.genreDao = genreDao;
-    }
-
     @Override
     public int count() {
-        return 0;
+        TypedQuery<Long> query = em.createQuery(COUNT_QUERY, Long.class);
+        return query.getSingleResult().intValue();
     }
 
     @Override
@@ -40,7 +32,7 @@ public class BookJpaDao implements BookDao {
 
     @Override
     public void delete(Book entity) {
-
+        em.remove(entity);
     }
 
     @Override
@@ -48,46 +40,9 @@ public class BookJpaDao implements BookDao {
         return em.find(Book.class, id);
     }
 
-    public Book getFirst() {
-        TypedQuery<Book> query = em.createQuery(
-                "select e from Book e where e.id = 1",
-                Book.class);
-        return query.getSingleResult();
-    }
-
     @Override
     public List<Book> getAll() {
-        TypedQuery<Book> query = em.createQuery(
-                "select e from Book e",
-                Book.class);
+        TypedQuery<Book> query = em.createQuery(SELECT_ALL_QUERY, Book.class);
         return query.getResultList();
-    }
-
-    public Book getByName(String name) {
-        TypedQuery<Book> query = em.createQuery(
-                "select e from Book e where e.name = :name",
-                Book.class);
-        query.setParameter("name", name);
-        return query.getSingleResult();
-    }
-
-    @Override
-    public void unbind(Book book, Author author) {
-
-    }
-
-    @Override
-    public void unbind(Book book, Genre genre) {
-
-    }
-
-    @Override
-    public void bind(Book book, Author author) {
-
-    }
-
-    @Override
-    public void bind(Book book, Genre genre) {
-
     }
 }
