@@ -1,28 +1,60 @@
 package ru.otus.spring.bookinfo.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
+@Entity
 @Getter
-public class Book extends AbstractEntity {
+@Setter
+@NoArgsConstructor
+public class Book implements BasicEntity {
 
-    private final Set<Genre> genres = new HashSet<>();
-    private final Set<Author> authors = new HashSet<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private String name;
+
+    @ManyToMany
+    private Collection<Genre> genres = new ArrayList<>();
+
+    @ManyToMany
+    private Collection<Author> authors = new ArrayList<>();
 
     public Book(int id, String name) {
-        super(id, name);
+        this.id = id;
+        this.name = name;
     }
 
-    public void setGenres(Collection<Genre> genres) {
-        this.genres.clear();
-        this.genres.addAll(genres);
+    public Book(String name) {
+        this.name = name;
     }
 
-    public void setAuthors(Collection<Author> authors) {
-        this.authors.clear();
-        this.authors.addAll(authors);
+    public void addGenre(Genre genre) {
+        if (!getGenres().contains(genre)) {
+            getGenres().add(genre);
+        }
+        if (!genre.getBooks().contains(this)) {
+            genre.getBooks().add(this);
+        }
+    }
+
+    public void addAuthor(Author author) {
+        if (!getAuthors().contains(author)) {
+            getAuthors().add(author);
+        }
+        if (!author.getBooks().contains(this)) {
+            author.getBooks().add(this);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "" + id;
     }
 }
