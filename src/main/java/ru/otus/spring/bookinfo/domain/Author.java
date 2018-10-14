@@ -1,36 +1,23 @@
 package ru.otus.spring.bookinfo.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-public class Author implements BasicEntity {
+@Data
+public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String name;
 
     @ManyToMany(mappedBy = "authors")
     private Collection<Book> books = new ArrayList<>();
-
-    public Author(String name) {
-        this.name = name;
-    }
-
-    public Author(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     @Override
     public String toString() {
