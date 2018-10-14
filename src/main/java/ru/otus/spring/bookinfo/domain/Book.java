@@ -1,22 +1,18 @@
 package ru.otus.spring.bookinfo.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-public class Book implements BasicEntity {
+@Data
+public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String name;
 
@@ -25,15 +21,6 @@ public class Book implements BasicEntity {
 
     @ManyToMany
     private Collection<Author> authors = new ArrayList<>();
-
-    public Book(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Book(String name) {
-        this.name = name;
-    }
 
     public void addGenre(Genre genre) {
         if (!getGenres().contains(genre)) {
