@@ -1,25 +1,21 @@
 package ru.otus.spring.bookinfo.dao;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-import ru.otus.spring.bookinfo.config.DaoTestConfig;
-import ru.otus.spring.bookinfo.domain.Book;
 import ru.otus.spring.bookinfo.domain.Genre;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
 @DataJpaTest
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@Import(DaoTestConfig.class)
 public class GenreDaoTest {
 
     private static final int EXPECTED_COUNT = 5;
@@ -35,40 +31,49 @@ public class GenreDaoTest {
 
     @Test
     public void insertGetAndDelete() {
-        int before = genreDao.count();
-        genreDao.save(new Genre(EXPECTED_NAME));
+        long before = genreDao.count();
+        genreDao.save(createGenre(EXPECTED_NAME));
         assertEquals(before + 1, genreDao.count());
-        int expectedId = before + 1;
-        Genre genre = genreDao.getById(expectedId);
+        int expectedId = (int) before + 1;
+        Optional<Genre> optionalGenre = genreDao.findById(expectedId);
+        assertTrue(optionalGenre.isPresent());
+        Genre genre = optionalGenre.get();
         assertEquals(EXPECTED_NAME, genre.getName());
         genreDao.delete(genre);
         assertEquals(before, genreDao.count());
     }
 
+    private Genre createGenre(String name) {
+        Genre genre = new Genre();
+        genre.setName(name);
+        return genre;
+    }
+
     @Test
     public void getById() {
-        for (int id = 1; id <= EXPECTED_COUNT; id++) {
-            Genre genre = genreDao.getById(id);
-            assertNotNull(genre);
+        for (Integer id = 1; id <= EXPECTED_COUNT; id++) {
+            Optional<Genre> optionalGenre = genreDao.findById(id);
+            assertTrue(optionalGenre.isPresent());
+            Genre genre = optionalGenre.get();
             assertEquals(id, genre.getId());
         }
     }
 
     @Test
     public void getAll() {
-        List<Genre> listBefore = genreDao.getAll();
+        List<Genre> listBefore = genreDao.findAll();
         assertEquals(EXPECTED_COUNT, listBefore.size());
     }
 
     @Test
     public void getByWrongId() {
-        Genre genre = genreDao.getById(EXPECTED_COUNT + 100);
-        assertNull(genre);
+        Optional<Genre> genre = genreDao.findById(EXPECTED_COUNT + 100);
+        assertFalse(genre.isPresent());
     }
 
     @Test
     public void update() {
-        List<Genre> genres = genreDao.getAll();
+        List<Genre> genres = genreDao.findAll();
         int count = genres.size();
         assertTrue(count > 0);
         Genre genre = genres.get(0);
@@ -77,8 +82,9 @@ public class GenreDaoTest {
         genre.setName(EXPECTED_NAME);
         assertNotEquals(EXPECTED_NAME, oldName);
         genreDao.save(genre);
-        assertEquals("The number of genres has not been changed", count, genreDao.getAll().size());
-        Genre updatedGenre = genreDao.getById(id);
-        assertEquals(EXPECTED_NAME, updatedGenre.getName());
+        assertEquals("The number of genres has not been changed", count, genreDao.findAll().size());
+        Optional<Genre> optionalUpdatedGenre = genreDao.findById(id);
+        assertTrue(optionalUpdatedGenre.isPresent());
+        assertEquals(EXPECTED_NAME, optionalUpdatedGenre.get().getName());
     }
 }

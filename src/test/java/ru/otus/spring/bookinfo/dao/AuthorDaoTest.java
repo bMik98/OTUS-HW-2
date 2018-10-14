@@ -5,20 +5,17 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-import ru.otus.spring.bookinfo.config.DaoTestConfig;
 import ru.otus.spring.bookinfo.domain.Author;
 
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 @DataJpaTest
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@Import(DaoTestConfig.class)
 public class AuthorDaoTest {
 
     private static final int EXPECTED_COUNT = 3;
@@ -34,34 +31,42 @@ public class AuthorDaoTest {
 
     @Test
     public void insertGetAndDelete() {
-        int before = authorDao.count();
-        authorDao.save(new Author(EXPECTED_NAME));
+        long before = authorDao.count();
+        authorDao.save(createAuthor(EXPECTED_NAME));
         assertEquals(before + 1, authorDao.count());
-        int expectedId = before + 1;
-        Author author = authorDao.getById(expectedId);
+        int expectedId = (int) before + 1;
+        Optional<Author> optionalAuthor = authorDao.findById(expectedId);
+        assertTrue(optionalAuthor.isPresent());
+        Author author = optionalAuthor.get();
         assertEquals(EXPECTED_NAME, author.getName());
         authorDao.delete(author);
         assertEquals(before, authorDao.count());
     }
 
+    private Author createAuthor(String name) {
+        Author author = new Author();
+        author.setName(name);
+        return author;
+    }
+
     @Test
     public void getById() {
-        for (int id = 1; id <= EXPECTED_COUNT; id++) {
-            Author author = authorDao.getById(id);
-            assertEquals(id, author.getId());
+        for (Integer id = 1; id <= EXPECTED_COUNT; id++) {
+            Optional<Author> optionalAuthor = authorDao.findById(id);
+            assertTrue(optionalAuthor.isPresent());
+            assertEquals(id, optionalAuthor.get().getId());
         }
     }
 
     @Test
     public void getAll() {
-        List<Author> list = authorDao.getAll();
+        List<Author> list = authorDao.findAll();
         assertEquals(EXPECTED_COUNT, list.size());
     }
 
     @Test
     public void getByWrongId() {
-        Author author = authorDao.getById(EXPECTED_COUNT + 100);
-        assertNull(author);
+        Optional<Author> optionalAuthor = authorDao.findById(EXPECTED_COUNT + 100);
+        assertFalse(optionalAuthor.isPresent());
     }
-
 }
