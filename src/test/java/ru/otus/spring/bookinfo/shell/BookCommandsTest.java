@@ -19,9 +19,7 @@ public class BookCommandsTest {
 
     private static final int ID = 10;
     private static final String NAME = "TestName";
-    private static final Book expectedBook = new Book(ID, NAME);
-    private static final List<Book> expectedBookList = Collections.singletonList(expectedBook);
-
+    
     @Mock
     private BookService serviceMock;
 
@@ -29,6 +27,10 @@ public class BookCommandsTest {
 
     @Before
     public void setUp() {
+        Book expectedBook = new Book();
+        expectedBook.setId(ID);
+        expectedBook.setName(NAME);
+        List<Book> expectedBookList = Collections.singletonList(expectedBook);
         commands = new BookCommands(serviceMock);
         when(serviceMock.getById(ID))
                 .thenReturn(expectedBook);

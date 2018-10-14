@@ -21,8 +21,6 @@ public class AuthorCommandsTest {
 
     private static final int ID = 10;
     private static final String NAME = "TestName";
-    private static final Author expectedAuthor = new Author(ID, NAME);
-    private static final List<Author> expectedAuthors = Collections.singletonList(expectedAuthor);
 
     @Mock
     private AuthorService serviceMock;
@@ -31,6 +29,10 @@ public class AuthorCommandsTest {
 
     @Before
     public void setUp() {
+        Author expectedAuthor = new Author();
+        expectedAuthor.setId(ID);
+        expectedAuthor.setName(NAME);
+        List<Author> expectedAuthors = Collections.singletonList(expectedAuthor);
         commands = new AuthorCommands(serviceMock);
         when(serviceMock.getById(ID)).thenReturn(expectedAuthor);
         when(serviceMock.getAll()).thenReturn(expectedAuthors);

@@ -21,8 +21,6 @@ public class GenreCommandsTest {
 
     private static final int ID = 10;
     private static final String NAME = "TestName";
-    private static final Genre expectedGenre = new Genre(ID, NAME);
-    private static final List<Genre> expectedGenres = Collections.singletonList(expectedGenre);
 
     @Mock
     private GenreService serviceMock;
@@ -31,6 +29,10 @@ public class GenreCommandsTest {
 
     @Before
     public void setUp() {
+        Genre expectedGenre = new Genre();
+        expectedGenre.setId(ID);
+        expectedGenre.setName(NAME);
+        List<Genre> expectedGenres = Collections.singletonList(expectedGenre);
         commands = new GenreCommands(serviceMock);
         when(serviceMock.getById(ID)).thenReturn(expectedGenre);
         when(serviceMock.getAll()).thenReturn(expectedGenres);
