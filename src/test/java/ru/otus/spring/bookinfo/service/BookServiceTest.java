@@ -7,7 +7,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-import ru.otus.spring.bookinfo.config.DaoTestConfig;
 import ru.otus.spring.bookinfo.config.ServiceTestConfig;
 import ru.otus.spring.bookinfo.domain.Author;
 import ru.otus.spring.bookinfo.domain.Book;
@@ -21,7 +20,7 @@ import static org.junit.Assert.assertFalse;
 @DataJpaTest
 @SpringBootTest
 @RunWith(SpringRunner.class)
-@Import({DaoTestConfig.class, ServiceTestConfig.class})
+@Import(ServiceTestConfig.class)
 public class BookServiceTest {
 
     private static final int BOOK_ID = 1;
@@ -39,7 +38,7 @@ public class BookServiceTest {
 
     @Test
     public void insert() {
-        int before = bookService.count();
+        long before = bookService.count();
         String title = "NewTitle";
         bookService.insert(title);
         assertEquals(before + 1, bookService.count());

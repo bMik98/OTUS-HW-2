@@ -22,7 +22,7 @@ public class GenreCommands {
 
     @ShellMethod("Display the number of genres")
     public void countGenres() {
-        ShowUtils.showEntityCount(service.count());
+        ShowUtils.showCount(service.count());
     }
 
     @ShellMethod("Insert new genre")
@@ -39,13 +39,17 @@ public class GenreCommands {
 
     @ShellMethod("Find a genre by ID")
     public void getGenre(@ShellOption @Positive int id) {
-        Genre entity = service.getById(id);
-        ShowUtils.showEntity(entity);
+        Genre genre = service.getById(id);
+        if (genre == null) {
+            ShowUtils.showError("Unable to find genre by id: " + id);
+        } else {
+            ShowUtils.showGenre(genre);
+        }
     }
 
     @ShellMethod("Display all the genres")
     public void listGenres() {
         List<Genre> entries = service.getAll();
-        ShowUtils.showEntityList(entries);
+        ShowUtils.showGenreList(entries);
     }
 }

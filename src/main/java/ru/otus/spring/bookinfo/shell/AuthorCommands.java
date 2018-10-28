@@ -22,7 +22,7 @@ public class AuthorCommands {
 
     @ShellMethod("Display the number of authors")
     public void countAuthors() {
-        ShowUtils.showEntityCount(service.count());
+        ShowUtils.showCount(service.count());
     }
 
     @ShellMethod("Insert new author")
@@ -39,13 +39,17 @@ public class AuthorCommands {
 
     @ShellMethod("Find an author by ID")
     public void getAuthor(@ShellOption @Positive int id) {
-        Author entity = service.getById(id);
-        ShowUtils.showEntity(entity);
+        Author author = service.getById(id);
+        if (author == null) {
+            ShowUtils.showError("Unable to find author by id: " + id);
+        } else {
+            ShowUtils.showAuthor(author);
+        }
     }
 
     @ShellMethod("Display all the authors")
     public void listAuthors() {
-        List<Author> entries = service.getAll();
-        ShowUtils.showEntityList(entries);
+        List<Author> authors = service.getAll();
+        ShowUtils.showAuthorList(authors);
     }
 }

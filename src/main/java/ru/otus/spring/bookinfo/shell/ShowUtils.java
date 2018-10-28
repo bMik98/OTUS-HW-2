@@ -2,26 +2,37 @@ package ru.otus.spring.bookinfo.shell;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import ru.otus.spring.bookinfo.domain.BasicEntity;
+import ru.otus.spring.bookinfo.domain.Author;
 import ru.otus.spring.bookinfo.domain.Book;
+import ru.otus.spring.bookinfo.domain.Genre;
 
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class ShowUtils {
 
-    static void showEntityCount(int count) {
+    static void showCount(long count) {
         System.out.println(count);
     }
 
-    static <E extends BasicEntity> void showEntity(E entity) {
+    static void showAuthorList(List<Author> authors) {
         displayTitle();
-        displaySingleEntity(entity);
+        authors.forEach(author -> displaySimpleEntity(author.getId(), author.getName()));
     }
 
-    static <E extends BasicEntity> void showEntityList(List<E> entities) {
+    static void showAuthor(Author author) {
         displayTitle();
-        entities.forEach(ShowUtils::displaySingleEntity);
+        displaySimpleEntity(author.getId(), author.getName());
+    }
+
+    static void showGenreList(List<Genre> genres) {
+        displayTitle();
+        genres.forEach(genre -> displaySimpleEntity(genre.getId(), genre.getName()));
+    }
+
+    static void showGenre(Genre genre) {
+        displayTitle();
+        displaySimpleEntity(genre.getId(), genre.getName());
     }
 
     private static void displayTitle() {
@@ -29,8 +40,8 @@ class ShowUtils {
         System.out.println("--------- --------------------------------------------------");
     }
 
-    private static <E extends BasicEntity> void displaySingleEntity(E entity) {
-        System.out.printf("%9d %-50s %n", entity.getId(), entity.getName());
+    private static void displaySimpleEntity(int id, String name) {
+        System.out.printf("%9d %-50s %n", id, name);
     }
 
     static void showBook(Book entity) {
@@ -51,5 +62,9 @@ class ShowUtils {
     private static void displayBook(Book book) {
         System.out.printf("%9d %-38s %-15s %-15s%n",
                 book.getId(), book.getName(), book.getAuthors(), book.getGenres());
+    }
+
+    static void showError(String message) {
+        System.out.println("*** Error *** " + message);
     }
 }

@@ -22,7 +22,7 @@ public class BookCommands {
 
     @ShellMethod("Display the number of Books")
     public void countBooks() {
-        ShowUtils.showEntityCount(service.count());
+        ShowUtils.showCount(service.count());
     }
 
     @ShellMethod("Insert new Book")
